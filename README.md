@@ -1,86 +1,98 @@
-#  Threejs
+# Threejs
 
-## Tabla de Contenido
+## Table of Content
+
 1. [Basic Scene](basic-scene)
 
 ## Basic Scene
 
-Necesitamos 4 elementos para iniciar:
+We need 4 elements to get started:
 
-- Una escena que contendrá todos los objetos
-- Algunos objetos
-- Una cámara
-- Y un *renderer*
+- A scene that will contain objects
+- Some objects
+- A camera
+- A render
 
-### Escena
+### Scene
 
-La escena la podemos ver como un contenedor en donde podemos
-agregar objectos, modelos, luces, etc. Y en algún punto de
-nuestro código, le decimos a Three.js que renderice la escena.
+- Like a container
+- We put objects, models, lights, etc. In it
+- At some point we ask Three.js to render that scene
 
-### Objectos
+### Objects
 
-Los objectos pueden ser varias cosas. Tenemos geometrías primitivas,
-partículas, luces, así como importar modelos hechos en otros programas.
+Can be many things
 
-### Malla
+- Primitive geometries
+- Imported models
+- Particles
+- Lights
+- Etc.
 
-Una malla es la combinación de la geometría de un objecto (su forma) y
-un material (cómo luce).
+### [Mesh](https://threejs.org/docs/index.html?q=Mesh#api/en/objects/Mesh)
 
-### Cámara
+A mesh is the combination of a **geometry** (the shape) and a **material** (how
+it looks). Start with a **BoxGeometry** and a **MeshBasicMaterial**.
 
-La cámara no es visible, es más como un punto de vista teórico. Cuando
-queremos renderizar una escena, está debe estar enfrente de nuestro
-punto de vista.
+### Camera
 
-Para crear una cámara, debemos usar la clase `PerspectiveCamera`. Hay
-dos parámetros esenciales que debemos proporcionar:
+- Not visible
+- Serve as point of view when doing a render
+- Can have multiple and switch between them
+- Different types
+- We are going to use **PerspectiveCamera**
 
-- El campo de vista: El fov (field of view) es qué tan grande en su
-ángulo de visión. Si se utiliza un ángulo muy grande, seremos capaces
-de ver más en cada dirección. Pero esto puede distorsionar como vemos la
-escena.
-- La relación de aspecto: En la mayoría de casos la relación de aspecto
-es la anchura del canvas dividido por su altura.
+The first parameter is: **The Field of View**
 
-### Renderizador
+- Vertical vision angle
+- In degrees
+- Also called **fov**
 
-El trabajo del renderizar es hacer el render de la escena. Simplemente
-debemos decirle al renderizador que renderice la escena desde el punto
-de vista de la cámara. Y el resultado se dibujara en el canvas.
+The second parameter is: **The Aspect Ratio**
+
+The width of the render divided by the height of the render.
+
+### Renderer
+
+- Render the scene from the camera point of view
+- Result drawn into a canvas
+- A canvas is a HTML element in which you can draw stuff
+- Three.js will use WebGL to draw the render inside this canvas
+- You _can create it or you_ can let Three.js do it
 
 <details>
-  <summary>Aquí está todo el código necesario para crear un cubo rojo</summary>
+  <summary>Here's the necessary code to make a red cube</summary>
 
-  ```javascript
-  // Scene
-  const scene = new THREE.Scene()
+```javascript
+// Scene
+const scene = new THREE.Scene();
 
-  // Red Cube
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-  const mesh = new THREE.Mesh(geometry, material)
-  scene.add(mesh)
+// Red Cube
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
-  // Sizes
-  const sizes = {
-    width: 800,
-    height: 600
-  }
+// Sizes
+const sizes = {
+  width: 800,
+  height: 600,
+};
 
-  // Camera
-  const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-  camera.position.z = 3
-  scene.add(camera)
+// Camera
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+camera.position.z = 3;
+camera.position.x = 1.5;
+scene.add(camera);
 
-  // Renderer
-  const canvas = document.querySelector('.webgl')
-  const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-  })
-  renderer.setSize(sizes.width, sizes.height)
+// Renderer
+const canvas = document.querySelector(".webgl");
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+});
+renderer.setSize(sizes.width, sizes.height);
 
-  renderer.render(scene, camera)
-  ```
+renderer.render(scene, camera);
+```
+
 </details>
