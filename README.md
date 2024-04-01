@@ -451,3 +451,8 @@ results
 - Becoming the standard for realistic renders
 
 ### UV Unwrapping
+
+## Materials
+
+Materials are used to put a color in each visible pixel of the geometries. The
+algorithms are written in programs called shaders.
